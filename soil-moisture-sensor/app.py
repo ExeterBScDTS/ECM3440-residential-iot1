@@ -21,6 +21,9 @@ print('Connected')
 def handle_method_request(request):
     print("Direct method received - ", request.name)
     # ahahahah
+    # 
+    # 
+    # 
     if request.name == "relay_on":
         relay.on()
     elif request.name == "relay_off":
