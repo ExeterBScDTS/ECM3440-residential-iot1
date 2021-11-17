@@ -24,9 +24,6 @@ def handle_method_request(request):
     # 
     # 
     # 
-    # 
-    # 
-    # 
     if request.name == "relay_on":
         relay.on()
     elif request.name == "relay_off":
