@@ -10,10 +10,10 @@ from azure.iot.device import IoTHubDeviceClient, Message, MethodResponse
 connection_string = '<connection_string>'
 
 adc = ADC()
-relay = GroveRelay(5)
+# relay = GroveRelay(5)
 
 device_client = IoTHubDeviceClient.create_from_connection_string(connection_string)
-
+# 
 print('Connecting')
 device_client.connect()
 print('Connected')
