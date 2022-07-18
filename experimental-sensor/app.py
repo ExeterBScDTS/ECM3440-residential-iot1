@@ -1,49 +1,41 @@
-from counterfit_connection import CounterFitConnection
-CounterFitConnection.init('127.0.0.1', 5000)
-
 import time
-from counterfit_shims_grove.adc import ADC
-from counterfit_shims_grove.grove_relay import GroveRelay
 import json
+import psutil
 from azure.iot.device import IoTHubDeviceClient, Message, MethodResponse
 
 connection_string = 'HostName=msaunby.azure-devices.net;DeviceId=experimental-sensor;SharedAccessKey=25DxrXZaB9Q4eyOP22OB2R3QcGbdzKHelvKp1dWgZGs='
-
-
-adc = ADC()
-relay = GroveRelay(5)
-
 device_client = IoTHubDeviceClient.create_from_connection_string(connection_string)
 
 print('Connecting')
 device_client.connect()
 print('Connected')
 
+
 def handle_method_request(request):
     print("Direct method received - ", request.name)
     
-    if request.name == "relay_on":
-        relay.on()
-    elif request.name == "relay_off":
-        relay.off()
-
     method_response = MethodResponse.create_from_method_request(request, 200)
     device_client.send_method_response(method_response)
+
 
 device_client.on_method_request_received = handle_method_request
 
 
 def loop_body():
-    soil_moisture = adc.read(0)
-    print("Soil moisture:", soil_moisture)
+    temperature = 18
+    print("Temperature:", temperature)
 
-    message = Message(json.dumps({ 'soil_moisture': soil_moisture }))
+    data = psutil.sensors_temperatures()
+    for x in data:
+        print(x)
+        for d in data[x]:
+            print(d.current)
+
+    message = Message(json.dumps({'temperature': temperature}))
     device_client.send_message(message)
 
-    time.sleep(5)
-    relay.on()
-    time.sleep(5)
-    relay.off()
+    time.sleep(10)
+
 
 while True:
     loop_body()
