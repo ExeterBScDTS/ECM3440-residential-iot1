@@ -2,6 +2,7 @@ import time
 import json
 import psutil
 from azure.iot.device import IoTHubDeviceClient, Message, MethodResponse
+from azure.iot.device.exceptions import ConnectionFailedError
 
 connection_string = 'HostName=msaunby.azure-devices.net;DeviceId=experimental-sensor;SharedAccessKey=25DxrXZaB9Q4eyOP22OB2R3QcGbdzKHelvKp1dWgZGs='
 device_client = IoTHubDeviceClient.create_from_connection_string(connection_string)
@@ -22,19 +23,20 @@ device_client.on_method_request_received = handle_method_request
 
 
 def loop_body():
-    temperature = 18
+    data = psutil.sensors_temperatures()
+    temperature = data['pch_skylake'][0].current
     print("Temperature:", temperature)
 
-    data = psutil.sensors_temperatures()
-    for x in data:
-        print(x)
-        for d in data[x]:
-            print(d.current)
+    message = Message(json.dumps(
+        {'kind': 'temperature', 'value': temperature}
+    ))
+    try:
+        device_client.send_message(message)
+    except ConnectionFailedError:
+        print("Failed to send message")
 
-    message = Message(json.dumps({'temperature': temperature}))
-    device_client.send_message(message)
-
-    time.sleep(10)
+    #time.sleep(5*60)
+    time.sleep(2 * 60)
 
 
 while True:

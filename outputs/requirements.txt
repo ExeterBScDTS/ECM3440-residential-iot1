@@ -1,0 +1,6 @@
+ipykernel
+azure-cosmos
+Cassandra-driver 
+prettytable
+requests
+pyopenssl

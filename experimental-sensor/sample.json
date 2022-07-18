@@ -1,0 +1,19 @@
+{
+    "temperature": 18,
+    "EventProcessedUtcTime": "2021-10-09T19:54:39.9859091Z",
+    "PartitionId": "1",
+    "EventEnqueuedUtcTime": "2021-10-09T19:53:59.3930000Z",
+    "IoTHub": {
+        "MessageId": null,
+        "CorrelationId": null,
+        "ConnectionDeviceId": "experimental-sensor",
+        "ConnectionDeviceGenerationId": "637688000871722297",
+        "EnqueuedTime": "2021-10-09T19:53:59.3930000Z"
+    },
+    "id": "b66b7090-9f01-4002-9b13-f735afb4146d",
+    "_rid": "vE4qALTR2X4BAAAAAAAAAA==",
+    "_self": "dbs/vE4qAA==/colls/vE4qALTR2X4=/docs/vE4qALTR2X4BAAAAAAAAAA==/",
+    "_etag": "\"7903004a-0000-1100-0000-6161f3870000\"",
+    "_attachments": "attachments/",
+    "_ts": 1633809287
+}
